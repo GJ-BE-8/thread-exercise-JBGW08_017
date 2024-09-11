@@ -35,7 +35,7 @@ public class CounterThread extends Thread{
         }
         this.setName(name);
         this.countMaxSize = countMaxSize;
-        this.count = 0;
+        this.count = 1;
     }
 
     @Override
