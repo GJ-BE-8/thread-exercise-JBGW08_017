@@ -28,7 +28,7 @@ public class SharedCounter {
         }
         this.count = count;
         //TODO#1-1 semaphore를 생성 합니다.( 동시에 하나의 Thread만 접근할 수 있습니다. ), permits prameter를 확인하세요.
-        semaphore = null;
+        semaphore = new Semaphore(1);
     }
 
     public long getCount(){
@@ -38,8 +38,14 @@ public class SharedCounter {
             semaphore.release()를 호출하여
             허가를 반환 합니다.
          */
+        try {
+            semaphore.acquire();
+            return count;
+        }catch(InterruptedException e){
 
-        return count;
+        }finally {
+            semaphore.release();
+        }
     }
 
     public long increaseAndGet(){
