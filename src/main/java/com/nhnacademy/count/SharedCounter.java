@@ -42,7 +42,7 @@ public class SharedCounter {
             semaphore.acquire();
             return count;
         }catch(InterruptedException e){
-
+            throw new RuntimeException(e);
         }finally {
             semaphore.release();
         }
@@ -52,15 +52,30 @@ public class SharedCounter {
         /* TODO#1-3 count = count + 1 증가시키고 count를 반환 합니다.
            1-2 처럼 semaphore를 이용해서 동기화할 수 있도록 구현 합니다.
         */
-        count = count + 1;
-        return count;
+        try {
+            semaphore.acquire();
+            count = count + 1;
+            return count;
+        }catch(InterruptedException e) {
+            throw new RuntimeException(e);
+        }finally {
+            semaphore.release();
+        }
     }
 
     public long decreaseAndGet(){
         /*TODO#1-4 count = count-1 감소시키고 count를 반환 합니다.
           1-2 처럼 semaphore를 이용해서 동기화할 수 있도록 구현 합니다.
         */
-        count = count - 1;
-        return count;
+        try {
+            semaphore.acquire();
+            count = count - 1;
+            return count;
+        }catch(InterruptedException e) {
+            throw new RuntimeException(e);
+        }finally {
+            semaphore.release();
+        }
+
     }
 }
